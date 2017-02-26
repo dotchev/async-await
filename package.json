@@ -1,0 +1,16 @@
+{
+  "name": "async-await",
+  "version": "1.0.0",
+  "description": "",
+  "main": "waterfall.js",
+  "scripts": {
+    "test": "node run-all.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.1.5",
+    "bluebird": "^3.4.7"
+  }
+}
