@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dotchev/async-await.svg?branch=master)](https://travis-ci.org/dotchev/async-await)
+
 # async-await
 Show common async operations with both async.js and ES6 async-await
 
