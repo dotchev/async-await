@@ -1,11 +1,11 @@
 'use strict';
 
 const assert = require('assert');
-const mapSeries = require('bluebird').mapSeries;
+const bluebird = require('bluebird');
 const { inc, double } = require('../tools-await');
 
-async function calc(x) {
-  return await mapSeries(x, inc);
+async function calc(arr) {
+  return await bluebird.mapSeries(arr, inc);
 }
 
 async function main() {

@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/dotchev/async-await.svg?branch=master)](https://travis-ci.org/dotchev/async-await)
 
 # async-await
-Show common async operations with both async.js and ES6 async-await
+Demonstrate common async operations with both async.js and ES6 async-await.
 
 Node.js [v7.6.0][1] brings official support for [async functions][2].
 This is an [ES7 feature][3] that allows handling asynchronous operations in a clean way.
@@ -35,6 +35,7 @@ p.then(result => {
   console.log('OK');
 }).catch(err => console.error(err));
 ```
+[src/sleep.js](src/sleep.js)
 
 It all starts and ends with a promise: 
 * ***await*** takes a promise and suspends the current script until the
@@ -57,35 +58,120 @@ const fs = pify(require('fs'));
 async function main() {
   let text = await fs.readFile(__filename, 'utf8');
   assert(/some-token/.test(text));
+
+  try {
+    await fs.readFile('no-such-file', 'utf8');
+    assert(false, 'should throw');
+  } catch (err) {
+    assert.equal(err.code, 'ENOENT');
+  }
 }
 ```
+[src/promisify.js](src/promisify.js)
 
-## Common Operations
+## Common Asynchronous Operations
 
 ### Waterfall
 
-* [async](src/waterfall-async.js)
-* [async-await](src/waterfall-await.js)
+Execute several operations sequentially,
+each one taking the result from the previous one.
+
+[async](src/waterfall-async.js)
+```js
+function calc(x, cb) {
+  async.waterfall([
+    inc.bind(null, x),
+    double
+  ], cb);
+}
+```
+
+[async-await](src/waterfall-await.js)
+```js
+async function calc(x) {
+  let r = await inc(x);
+  return await double(r);
+}
+```
 
 ### Parallel
 
-* [async](src/parallel-async.js)
-* [async-await](src/parallel-await.js)
+Start several operations in parallel and wait all of them to complete.
+
+[async](src/parallel-async.js)
+```js
+function calc(x, cb) {
+  async.parallel([
+    inc.bind(null, x),
+    double.bind(null, x)
+  ], cb);
+}
+```
+
+[async-await](src/parallel-await.js)
+```js
+async function calc(x) {
+  return await Promise.all([inc(x), double(x)]);
+}
+```
 
 ### Race
 
-* [async](src/race-async.js)
-* [async-await](src/race-await.js)
+Start several operations in parallel and get the result of the first one to complete.
+
+[async](src/race-async.js)
+```js
+function calc(x, y, cb) {
+  async.race([
+    inc.bind(null, x),
+    double.bind(null, y)
+  ], cb);
+}
+```
+
+[async-await](src/race-await.js)
+```js
+async function calc(x, y) {
+  return await Promise.race([inc(x), double(y)]);
+}
+```
 
 ### Map
 
-* [async](src/map-async.js)
-* [async-await](src/map-await.js)
+Execute the same operation for each array element in parallel.
+
+[async](src/map-async.js)
+```js
+function calc(arr, cb) {
+  async.map(arr, inc, cb);
+}
+```
+
+[async-await](src/map-await.js)
+```js
+async function calc(arr) {
+  return await Promise.all(arr.map(inc));
+}
+```
 
 ### Map Series
 
-* [async](src/mapSeries-async.js)
-* [async-await](src/mapSeries-await.js)
+Execute the same operation for each array element sequentially.
+
+[async](src/mapSeries-async.js)
+```js
+function calc(arr, cb) {
+  async.mapSeries(arr, inc, cb);
+}
+```
+
+[async-await](src/mapSeries-await.js)
+```js
+async function calc(arr) {
+  return await bluebird.mapSeries(arr, inc);
+}
+```
+
 
 
 [1]: https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V7.md#7.6.0

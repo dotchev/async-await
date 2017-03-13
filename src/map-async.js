@@ -4,8 +4,8 @@ const assert = require('assert');
 const async = require('async');
 const { inc, double } = require('../tools-async');
 
-function calc(x, cb) {
-  async.map(x, inc, cb);
+function calc(arr, cb) {
+  async.map(arr, inc, cb);
 }
 
 calc([3, 4], (err, result) => {

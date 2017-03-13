@@ -3,16 +3,16 @@
 const assert = require('assert');
 const { inc, double } = require('../tools-await');
 
-async function calc(x, y) {
-  return await Promise.all([inc(x), double(y)]);
+async function calc(x) {
+  return await Promise.all([inc(x), double(x)]);
 }
 
 async function main() {
-  let result = await calc(3, 4);
-  assert.deepEqual(result, [4, 8]);
+  let result = await calc(3);
+  assert.deepEqual(result, [4, 6]);
 
   try {
-    result = await calc(5, 6);
+    result = await calc(6);
     assert(false, 'should throw');
   } catch (err) {
     assert(/12/.test(err.message));

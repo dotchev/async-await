@@ -13,9 +13,13 @@ async function answer() {
   return 42;
 }
 
+console.log('before');
 var p = answer();
+console.log('after');
+
 assert(p instanceof Promise);
 p.then(result => {
   assert.equal(result, 42);
   console.log('OK');
 }).catch(err => console.error(err));
+console.log('Bottom')

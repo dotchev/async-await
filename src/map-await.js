@@ -3,8 +3,8 @@
 const assert = require('assert');
 const { inc, double } = require('../tools-await');
 
-async function calc(x) {
-  return await Promise.all(x.map(inc));
+async function calc(arr) {
+  return await Promise.all(arr.map(inc));
 }
 
 async function main() {
