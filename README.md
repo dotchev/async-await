@@ -172,7 +172,11 @@ async function calc(arr) {
 }
 ```
 
+## See Also
 
+[6 Reasons Why JavaScript’s Async/Await Blows Promises Away][10]
+
+While it compares async functions to promises, the same issues are valid also with callbacks.
 
 [1]: https://github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V7.md#7.6.0
 [2]: https://developers.google.com/web/fundamentals/getting-started/primers/async-functions
@@ -183,3 +187,5 @@ async function calc(arr) {
 [7]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/function*
 [8]: https://github.com/laverdet/node-fibers
 [9]: https://github.com/sindresorhus/pify
+[10]: https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9
+
